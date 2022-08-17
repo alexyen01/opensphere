@@ -1,10 +1,12 @@
-goog.declareModuleId('os.file.BetaToggleUI');
+goog.declareModuleId('os.ui.config.BetaToggleSettingsUI');
 
+import AlertEventSeverity from '../../alert/alerteventseverity.js';
+import AlertManager from '../../alert/alertmanager.js';
 import Settings from '../../config/settings.js';
 import {ROOT} from '../../os.js';
 import Module from '../module.js';
 
-
+export const BETA_FEATURES_PATH = 'betaFeatures';
 
 /**
  * The column mapping settings UI directive
@@ -44,16 +46,29 @@ export class Controller {
      * @protected
      */
     this.scope = $scope;
+
+    /**
+     * Settings instance for this class
+     * @type {Settings}
+     */
     this.Settings = Settings.getInstance();
-    // set up an array to store all beta features
+
+    /**
+     * Array to hold all beta features
+     * @type {betaFeatureValues}
+     */
     this['betaFeatureNames'] = [];
     // iterate through all beta features in the settings.json
-    for (const key in this.Settings.get('betaFeatures')) {
+    for (const key in this.Settings.get(BETA_FEATURES_PATH)) {
       // get values for the beta feature
-      const path = this.Settings.get('betaFeatures.' + key);
+      const path = this.Settings.get(BETA_FEATURES_PATH + '.' + key);
       var checkValue = this.Settings.get(path);
       // store all the beta feature values
-      const betaFeature = new betaFeatureValues(key, path, checkValue);
+      const betaFeature = /** @type {betaFeatureValues} */ ({
+        'name': key,
+        'path': path,
+        'checkValue': checkValue
+      });
       // store the class that holds those values into the array
       this['betaFeatureNames'].push(betaFeature);
     }
@@ -73,29 +88,35 @@ export class Controller {
    */
   toggle(feature) {
     // check the current setting then set the opposite of it
-    if (feature.checkValue == true) {
-      feature.checkValue = false;
-      this.Settings.set(feature.path, false);
+    const newValue = !feature.checkValue;
+
+    feature.checkValue = newValue;
+    this.Settings.set(feature.path, newValue);
+    this.betaToggleAlert(feature);
+  }
+  /**
+   * Alerts that a feature has been turned on or off
+   * @param {betaFeatureValues} feature
+   * @export
+   */
+  betaToggleAlert(feature) {
+    var message;
+    if (feature.checkValue) {
+      message = 'on';
     } else {
-      feature.checkValue = true;
-      this.Settings.set(feature.path, true);
+      message = 'off';
     }
+    AlertManager.getInstance().sendAlert('Beta feature ' + feature.name + ' is now ' +
+     message + ', please refresh.', AlertEventSeverity.INFO);
   }
 }
 
 /**
- * Class for storing values related to a beta feature
+ * Stores the values related to a beta feature
+ *  @typedef {{
+ *  name: string,
+ *  path: string,
+ *  checkValue: boolean
+ * }}
  */
-class betaFeatureValues {
-  /**
-   * Constructor
-   * @param {string} name
-   * @param {string} path
-   * @param {boolean} checkValue
-   */
-  constructor(name, path, checkValue) {
-    this.name = name;
-    this.path = path;
-    this.checkValue = checkValue;
-  }
-}
+export let betaFeatureValues;

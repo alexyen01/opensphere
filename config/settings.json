@@ -228,7 +228,8 @@
     },
     "betaFeatures":  {
       "ellipse": "os.mapping.ellipse.allowConfiguration",
-      "circle": "os.mapping.circle.allowConfiguration"
+      "circle": "os.mapping.circle.allowConfiguration",
+      "heatmap": "os.mapping.heatmap.enabled"
     }
   },
   "user": {
@@ -264,6 +265,9 @@
         },
         "circle": {
           "allowConfiguration": true
+        },
+        "heatmap": {
+          "enabled": true
         }
       }
     }

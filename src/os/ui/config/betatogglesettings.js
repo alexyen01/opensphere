@@ -1,12 +1,12 @@
-goog.declareModuleId('os.file.BetaToggle');
+goog.declareModuleId('os.ui.config.BetaToggleSettings');
 
-import {directiveTag} from './betatoggleui.js';
+import {directiveTag} from './betatogglesettingsui.js';
 import SettingPlugin from './settingplugin.js';
 
 
 /**
  */
-export default class BetaToggle extends SettingPlugin {
+export default class BetaToggleSettings extends SettingPlugin {
   /**
    * Constructor.
    */

@@ -1,5 +1,6 @@
 goog.declareModuleId('plugin.heatmap.HeatmapPlugin');
 
+import Settings from '../../os/config/settings.js';
 import DataManager from '../../os/data/datamanager.js';
 import DataEventType from '../../os/data/event/dataeventtype.js';
 import LayerConfigManager from '../../os/layer/config/layerconfigmanager.js';
@@ -25,19 +26,25 @@ export default class HeatmapPlugin extends AbstractPlugin {
    * @inheritDoc
    */
   init() {
-    LayerConfigManager.getInstance().registerLayerConfig(ID, HeatmapLayerConfig);
+    console.log(Settings.getInstance().get('os.mapping.heatmap.enabled'));
+    console.log(Settings.getInstance().get('os.mapping.ellipse.allowConfiguration'));
+    console.log(Settings.getInstance().get('os.mapping.circle.allowConfiguration'));
+    if (Settings.getInstance().get('os.mapping.heatmap.enabled')) {
+      console.log('sure');
+      LayerConfigManager.getInstance().registerLayerConfig(ID, HeatmapLayerConfig);
 
-    // setup the layer action manager
-    heatmapMenu.setup();
+      // setup the layer action manager
+      heatmapMenu.setup();
 
-    // listen for source add so that we can set the action as supported
-    var dm = DataManager.getInstance();
-    dm.listen(DataEventType.SOURCE_ADDED, function(event) {
-      var source = event.source;
-      if (source && source instanceof VectorSource) {
-        source.setSupportsAction(heatmapMenu.EventType.GENERATE_HEATMAP, true);
-      }
-    });
+      // listen for source add so that we can set the action as supported
+      var dm = DataManager.getInstance();
+      dm.listen(DataEventType.SOURCE_ADDED, function(event) {
+        var source = event.source;
+        if (source && source instanceof VectorSource) {
+          source.setSupportsAction(heatmapMenu.EventType.GENERATE_HEATMAP, true);
+        }
+      });
+    }
   }
 
   /**
