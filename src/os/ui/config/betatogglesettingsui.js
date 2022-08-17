@@ -6,6 +6,10 @@ import Settings from '../../config/settings.js';
 import {ROOT} from '../../os.js';
 import Module from '../module.js';
 
+/**
+ * The path to beta features in the settings.json
+ * @type string
+ */
 export const BETA_FEATURES_PATH = 'betaFeatures';
 
 /**
@@ -55,7 +59,7 @@ export class Controller {
 
     /**
      * Array to hold all beta features
-     * @type {betaFeatureValues}
+     * @type {Array<betaFeatureValues>}
      */
     this['betaFeatureNames'] = [];
     // iterate through all beta features in the settings.json
@@ -100,14 +104,11 @@ export class Controller {
    * @export
    */
   betaToggleAlert(feature) {
-    var message;
-    if (feature.checkValue) {
-      message = 'on';
-    } else {
-      message = 'off';
-    }
-    AlertManager.getInstance().sendAlert('Beta feature ' + feature.name + ' is now ' +
-     message + ', please refresh.', AlertEventSeverity.INFO);
+    const enabled = feature.checkValue;
+    const message = `'Beta feature ${feature.name} is now 
+        ${enabled ? 'on' : 'off' }
+          , please refresh.'`;
+    AlertManager.getInstance().sendAlert(message, AlertEventSeverity.INFO);
   }
 }
 

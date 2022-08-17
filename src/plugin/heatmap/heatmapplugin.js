@@ -26,9 +26,6 @@ export default class HeatmapPlugin extends AbstractPlugin {
    * @inheritDoc
    */
   init() {
-    console.log(Settings.getInstance().get('os.mapping.heatmap.enabled'));
-    console.log(Settings.getInstance().get('os.mapping.ellipse.allowConfiguration'));
-    console.log(Settings.getInstance().get('os.mapping.circle.allowConfiguration'));
     if (Settings.getInstance().get('os.mapping.heatmap.enabled')) {
       console.log('sure');
       LayerConfigManager.getInstance().registerLayerConfig(ID, HeatmapLayerConfig);
