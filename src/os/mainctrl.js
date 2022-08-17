@@ -137,6 +137,7 @@ import AbstractMainCtrl from './ui/abstractmainctrl.js';
 import ClearEntry from './ui/clear/clearentry.js';
 import ClearManager from './ui/clear/clearmanager.js';
 import ColumnMappingSettings from './ui/column/mapping/columnmappingsettings.js';
+import BetaToggle from './ui/config/betatoggle.js';
 import SettingsManager from './ui/config/settingsmanager.js';
 import * as osUiDraw from './ui/draw/draw.js';
 import UIEventType from './ui/events/uieventtype.js';
@@ -660,6 +661,7 @@ export default class Controller extends AbstractMainCtrl {
     sm.addSettingPlugin(new ColumnMappingSettings());
     sm.addSettingPlugin(new ThemeSettings());
     sm.addSettingPlugin(new FileSettings());
+    sm.addSettingPlugin(new BetaToggle());
   }
 
   /**

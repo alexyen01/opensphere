@@ -1,0 +1,17 @@
+<div class="d-flex flex-column flex-fill container-fluid u-overflow-x-auto u-overflow-y-auto">
+  <div class="d-flex flex-row flex-shrink-0">
+    <h4 class="col p-0">Toggle Beta Features</h4>
+  </div>
+  <div class="form-group">Use this toggle to turn on and off beta features.</div>
+
+  <div class="form-group">
+    <div class="form-check" title="Turn on or off a beta feature.">
+      <div ng-repeat="betaFeature in ctrl.betaFeatureNames" > 
+        <input class="form-check-input" id={{betaFeature.name}} type="checkbox" name="betaFeature.name"
+          ng-checked={{betaFeature.checkValue}}
+          ng-click="ctrl.toggle(betaFeature)">
+            <label class="form-check-label" for="betaFeatureCheck">{{betaFeature.name}}</label>
+      </div>
+    </div>
+  </div>
+</div>
