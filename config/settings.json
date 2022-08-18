@@ -225,6 +225,11 @@
         "Red & Green Deficiency (Protanomaly & Deuteranomaly)": "overrides_slate_compact_cb_rg",
         "Blue Deficiency (Tritanopia)": "overrides_slate_compact_cb_b"
       }
+    },
+    "betaFeatures":  {
+      "ellipse": "os.mapping.ellipse.allowConfiguration",
+      "circle": "os.mapping.circle.allowConfiguration",
+      "heatmap": "os.mapping.heatmap.enabled"
     }
   },
   "user": {
@@ -257,6 +262,12 @@
       "mapping": {
         "ellipse": {
           "allowConfiguration": false
+        },
+        "circle": {
+          "allowConfiguration": true
+        },
+        "heatmap": {
+          "enabled": true
         }
       }
     }
