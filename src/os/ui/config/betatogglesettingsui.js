@@ -105,9 +105,9 @@ export class Controller {
    */
   betaToggleAlert(feature) {
     const enabled = feature.checkValue;
-    const message = `'Beta feature ${feature.name} is now 
+    const message = `Beta feature ${feature.name} is now 
         ${enabled ? 'on' : 'off' }
-          , please refresh.'`;
+          , please refresh.`;
     AlertManager.getInstance().sendAlert(message, AlertEventSeverity.INFO);
   }
 }
